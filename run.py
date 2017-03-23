@@ -1,15 +1,17 @@
 import json
 from pprint import pprint
 
-
-
 #Constants here
 TOTAL_ITEMS = 250
+
+#Weights of different parameters for calculating similarity
 
 WEIGHT_GENRE = 95
 WEIGHT_DIRECTOR = 15
 WEIGHT_STAR = 10
 WEIGHT_FACTOR_RATING = 2.5  # A difference of one in rating will cause shift of 2.5 in score
+
+#JSON keys in the input
 
 KEY_RATING = 'rating'
 KEY_GENRE =  'genre'
@@ -31,7 +33,7 @@ def calculate_score(moviedata, refIndex):
         score = 0           #This is a temp var, will be eventually assigned to scores list
         
         if (i==refIndex):
-            continue
+            continue        #Comparison with ownself case
         
         #Start calculating the score
         
@@ -42,7 +44,7 @@ def calculate_score(moviedata, refIndex):
         for genre in genres:
             for baseGenre in baseGenres:
                 if(baseGenre == genre):
-                    print 'genre match : '+genre
+                    ##print 'genre match : '+genre
                     score += WEIGHT_GENRE
             
         #Matching stars
@@ -52,7 +54,7 @@ def calculate_score(moviedata, refIndex):
         for star in stars:
             for baseStar in baseStars:
                 if(baseStar == star):
-                    print 'star match : '+star
+                    ##print 'star match : '+star
                     score += WEIGHT_STAR
                     
         #Matching directors
@@ -60,7 +62,7 @@ def calculate_score(moviedata, refIndex):
         director = movie[KEY_DIRECTOR]
         
         if(baseDirector == director):
-            print 'director match : '+director
+            ##print 'director match : '+director
             score += WEIGHT_DIRECTOR
                     
         #Calculating final deflection due to rating (small effect only)
@@ -70,10 +72,10 @@ def calculate_score(moviedata, refIndex):
         #Assigning score to the scores list
         scores[i][2] = score
         
-        
     return scores
 
 
+# Control begins from here
 with open('input.json') as json_file:    
     data = json.load(json_file)
 
@@ -87,11 +89,11 @@ for i in range(TOTAL_ITEMS):
     sortedMovieScoreList = sorted(movieScoreList, key=lambda movieScoreListItem: -movieScoreListItem[2])
     
     tempArray = [];
-    for i in range(20):
-        tempArray.insert(i, sortedMovieScoreList[i])
+    for i in range(10):
+        tempArray.insert(i, sortedMovieScoreList[i][1])
         
     #Storing only name of the movie in JSON
-    finalData[baseMovieTitle] = tempArray[1]
+    finalData[baseMovieTitle] = tempArray
 
 
 with open('output.json','w') as outfile:
