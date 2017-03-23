@@ -11,7 +11,7 @@ WEIGHT_GENRE = 95
 WEIGHT_DIRECTOR = 15
 WEIGHT_STAR = 10
 WEIGHT_FACTOR_RATING = 2.5  # A difference of one in rating will cause shift of 2.5 in score
-
+WEIGHT_MATCH_KEYWORD = 30
 #JSON keys in the input
 
 KEY_RATING = 'rating'
@@ -75,7 +75,14 @@ def calculate_score(moviedata, keywordsArray, refIndex):
         ## Experimental feature - Rapid Automatic Keyword Extraction
         ## Number of keyword matches will also deviate the score and 
         ## will produce more realistic results
+        keywordScore=0
+        for j in range(TOTAL_ITEMS):
+            for baseKeyword in keywordsArray[refIndex]:
+                for keyword in keywordsArray[j]:
+                    if(keyword == baseKeyword):
+                        keywordScore += WEIGHT_MATCH_KEYWORD
         
+        score += keywordScore
         
         ## Assigning score to the scores list
         scores[i][2] = score
@@ -94,11 +101,14 @@ def extractKeywordsFromDescription(inputData, n):
         text = inputData[i][KEY_DESCRIPTION]
         keywords = rake_object.run(text)
         keywordsArray.insert(i, keywords)
-
+    
+    return keywordsArray
 
 #######################################################################
 ## Control begins from here                                            #
 #######################################################################
+
+print 'Reading file...'
 
 with open('input.json') as json_file:    
     data = json.load(json_file)
@@ -118,13 +128,16 @@ for i in range(TOTAL_ITEMS):
     
     tempArray = [];
     for i in range(10):
-        tempArray.insert(i, sortedMovieScoreList[i][1])
+        tempArray.insert(i, sortedMovieScoreList[i])
         
     #Storing only name of the movie in JSON
     finalData[baseMovieTitle] = tempArray
 
 
-with open('output(WithKeywordExtraction).json','w') as outfile:
+with open('outputWithKeywordExtraction.json','w') as outfile:
     json.dump(finalData, outfile)
+
+print 'Completed...'
+print finalData
 
 

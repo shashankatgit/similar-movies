@@ -96,7 +96,7 @@ for i in range(TOTAL_ITEMS):
     
     tempArray = [];
     for i in range(10):
-        tempArray.insert(i, sortedMovieScoreList[i][1])
+        tempArray.insert(i, sortedMovieScoreList[i])
         
     #Storing only name of the movie in JSON
     finalData[baseMovieTitle] = tempArray
