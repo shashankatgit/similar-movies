@@ -78,12 +78,18 @@ with open('input.json') as json_file:
 finalData = {}
 
 for i in range(TOTAL_ITEMS):
-    movieScoreList = calculate_score(data, 0)
-    sorted(movieScoreList, key=lambda movieScoreListItem: -movieScoreListItem[2])
+    baseMovieTitle = data[i][KEY_TITLE]
+    movieScoreList = calculate_score(data, i)
+    sortedMovieScoreList = sorted(movieScoreList, key=lambda movieScoreListItem: -movieScoreListItem[2])
     
+    tempArray = [];
     for i in range(10):
-        print scores[i][1]
+        tempArray.insert(i, sortedMovieScoreList[i][1])
+        
+    finalData[baseMovieTitle] = tempArray
 
-
+print finalData['Fight Club']
+finalJSON = json.dumps(finalData)
+# print finalJSON
 
 

@@ -1,0 +1,26 @@
+You will find a list of records in the attached input file, each record describing a movie via various attributes.
+
+{ 
+  "movie_id": 1, 
+  "rating": "9.3", 
+  "votes": "1,318,626", 
+  "description": "Two imprisoned men bond over a number ....", 
+  "title": "The Shawshank Redemption", 
+  "poster": "", 
+  "release_date": "14 October 1994", 
+  "director": "Frank Darabont", 
+  "storyline": "Andy Dufresne is a young and successful ...",
+  "stars": [ "Tim Robbins", "Morgan Freeman", "Bob Gunton" ], 
+  "year": "1994", 
+  "genre": [ "Crime", "Drama" ], 
+  "gallery": [ "unknown1394846836._CB379391227_.png", ], 
+  "running_time": "142min"
+}
+
+Your output must be in the following format:
+
+{
+  "The Shawshank Redemption": ["The Green Mile", "The Bucket List", "Rain Man", ....],
+  "Fight Club": ["Donnie Darko", "Memento", ...], 
+  ...
+}
