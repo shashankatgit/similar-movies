@@ -1,5 +1,4 @@
 import json
-from pprint import pprint
 
 #Constants here
 TOTAL_ITEMS = 250
