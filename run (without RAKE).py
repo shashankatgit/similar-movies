@@ -1,6 +1,4 @@
 import json
-from RAKE import rake
-
 
 #Constants here
 TOTAL_ITEMS = 250
@@ -26,7 +24,6 @@ KEY_TITLE = 'title'
 def calculate_score(moviedata, refIndex):
     baseMovie = moviedata[refIndex]
     
-    ##Experimental feature - Rapid Automatic Keyword Extraction - Part 1
     
     scores=[]
     for i in range(TOTAL_ITEMS):
@@ -75,7 +72,7 @@ def calculate_score(moviedata, refIndex):
         #Assigning score to the scores list
         scores[i][2] = score
         
-        ## Experimental feature - Rapid Automatic Keyword Extraction - Part2
+    
         
         
     return scores

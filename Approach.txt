@@ -1,0 +1,8 @@
+At the first glance it is evident that the most important parameter of similarity check is Genre. 
+
+But, only genre is not enough for finding 10 similar movies. There have to be several other parameters.
+So, I decided to give weights to each of the parameter which holds some importance as can be seen in the python source. The weights help in calculating a score for each movie with respect to the base movie. This will help us sort out the 10 most similar movies from the lot.
+
+I also thought of extracting keywords from the description given using RAKE (Rapid Automatic Keyword Extraction). After plugging and using it I realized that there is not much deviation in results even after keywords are taken into consideration. So, the initial fundamental approach was also good to go.
+
+There are two source and output json files. One is produced with keyword extraction and the other is without it.
