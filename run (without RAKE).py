@@ -23,8 +23,10 @@ KEY_DESCRIPTION = 'description'
 KEY_TITLE = 'title'
 
 
-def calculate_score(moviedata, keywordsArray, refIndex):
+def calculate_score(moviedata, refIndex):
     baseMovie = moviedata[refIndex]
+    
+    ##Experimental feature - Rapid Automatic Keyword Extraction - Part 1
     
     scores=[]
     for i in range(TOTAL_ITEMS):
@@ -70,36 +72,16 @@ def calculate_score(moviedata, keywordsArray, refIndex):
         rating = movie[KEY_RATING]
         score += float(rating) * WEIGHT_FACTOR_RATING
 
-        
-        
-        ## Experimental feature - Rapid Automatic Keyword Extraction
-        ## Number of keyword matches will also deviate the score and 
-        ## will produce more realistic results
-        
-        
-        ## Assigning score to the scores list
+        #Assigning score to the scores list
         scores[i][2] = score
         
+        ## Experimental feature - Rapid Automatic Keyword Extraction - Part2
         
         
     return scores
 
 
-def extractKeywordsFromDescription(inputData, n):
-    rake_object = rake.Rake("stopwords.txt", 1, 1, 1)
-    keywordsArray=[]
-    for i in range(n):
-        keywords=[]
-        
-        text = inputData[i][KEY_DESCRIPTION]
-        keywords = rake_object.run(text)
-        keywordsArray.insert(i, keywords)
-
-
-#######################################################################
-## Control begins from here                                            #
-#######################################################################
-
+# Control begins from here
 with open('input.json') as json_file:    
     data = json.load(json_file)
 
@@ -107,13 +89,9 @@ with open('input.json') as json_file:
 
 finalData = {}
 
-## Formed a Keyword Array Using RAKE
-keywordsArray = extractKeywordsFromDescription(data, TOTAL_ITEMS)
-
-
 for i in range(TOTAL_ITEMS):
     baseMovieTitle = data[i][KEY_TITLE]
-    movieScoreList = calculate_score(data, keywordsArray, i)
+    movieScoreList = calculate_score(data, i)
     sortedMovieScoreList = sorted(movieScoreList, key=lambda movieScoreListItem: -movieScoreListItem[2])
     
     tempArray = [];
@@ -124,7 +102,7 @@ for i in range(TOTAL_ITEMS):
     finalData[baseMovieTitle] = tempArray
 
 
-with open('output(WithKeywordExtraction).json','w') as outfile:
+with open('output.json','w') as outfile:
     json.dump(finalData, outfile)
 
 
